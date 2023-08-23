@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  sensor-receiver-service:
+    build:
+      context: .
+      args:
+        - REDIS_PORT=${REDIS_PORT}
+    ports: 
+      - ${HTTP_EXT_PORT}:${HTTP_PORT}
+    depends_on:
+      - redis
+  redis:
+    image: redis:7.2.0
+    restart: always
+    environment:
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_DB: ${REDIS_DB}
